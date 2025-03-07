@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - RGR Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        .google-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .auth-links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .auth-links a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .password-strength {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+        .weak { color: #e74c3c; }
+        .medium { color: #f39c12; }
+        .strong { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-calculator logo-icon"></i>
+            <h1>RGR Calculator</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Create Your Account</h2>
+            <div id="error-message" class="error-message"></div>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required pattern="[A-Za-z ]{2,50}" title="Name should only contain letters and spaces">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required minlength="8">
+                    <div id="passwordStrength" class="password-strength"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="auth-btn">Sign Up</button>
+                <button type="button" class="google-btn" onclick="handleGoogleSignUp()">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" style="width: 20px;">
+                    Sign up with Google
+                </button>
+                <div class="auth-links">
+                    <p>Already have an account? <a href="login.html">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 RGR Calculator | Made with <i class="fas fa-heart"></i> by RGR Team</p>
+    </footer>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="auth.js"></script>
+    <script>
+        // Initialize DataStore and handle errors
+        async function initializeApp() {
+            try {
+                await DataStore.init();
+            } catch (error) {
+                console.error('Error initializing app:', error);
+                // Try to recover
+                const recovered = await DataStore.recoverFromError();
+                if (!recovered) {
+                    showError('Unable to initialize the application. Please clear your browser data and try again.');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Enhanced error display
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/)) strength++;
+            if (password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+            return strength;
+        }
+
+        // Signup form submission
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Initialize if needed
+            if (!await initializeApp()) return;
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Validate password strength
+            const strength = checkPasswordStrength(password);
+            if (strength < 3) {
+                showError('Password is too weak. Please include uppercase, lowercase, numbers, and special characters.');
+                return;
+            }
+
+            try {
+                const result = await DataStore.createUser(name, email, password);
+                if (result.success) {
+                    // Auto-login and redirect
+                    await DataStore.login(email, password);
+                    window.location.href = 'index.html';
+                } else {
+                    showError(result.error || 'Error creating account');
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError('An error occurred during signup. Please try again.');
+                
+                // Try to recover if it's a data error
+                if (error.message.includes('DataStore')) {
+                    await DataStore.recoverFromError();
+                }
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', initializeApp);
+    </script>
+</body>
+</html>

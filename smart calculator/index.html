@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGR Calculator - Smart Scientific Calculator & Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-calculator logo-icon"></i>
+            <h1>RGR Calculator</h1>
+        </div>
+        <div class="mode-switch">
+            <button id="normalMode" class="active"><i class="fas fa-calculator"></i> Normal</button>
+            <button id="scientificMode"><i class="fas fa-square-root-alt"></i> Scientific</button>
+        </div>
+        <div class="auth-buttons" style="position: absolute; top: 1rem; right: 1rem;">
+            <a href="login.html" style="color: white; margin-right: 1rem; text-decoration: none;">Login</a>
+            <a href="signup.html" style="color: white; text-decoration: none;">Sign Up</a>
+            <a href="admin.html" style="color: white; margin-left: 1rem; text-decoration: none;"><i class="fas fa-user-shield"></i></a>
+        </div>
+    </header>
+
+    <main>
+        <section id="calculator">
+            <div class="theme-toggle">
+                <button id="themeToggle"><i class="fas fa-moon"></i></button>
+            </div>
+            <div id="display">
+                <div id="history">0</div>
+                <div id="current">0</div>
+            </div>
+            <div id="keypad">
+                <!-- Normal Mode Buttons -->
+                <div id="normal-keypad" class="active-keypad">
+                    <button class="clear" data-action="clear">C</button>
+                    <button class="operator" data-action="backspace">⌫</button>
+                    <button class="operator" data-action="/">/</button>
+                    <button class="operator" data-action="%">%</button>
+                    
+                    <button class="number">7</button>
+                    <button class="number">8</button>
+                    <button class="number">9</button>
+                    <button class="operator" data-action="*">×</button>
+                    
+                    <button class="number">4</button>
+                    <button class="number">5</button>
+                    <button class="number">6</button>
+                    <button class="operator" data-action="-">-</button>
+                    
+                    <button class="number">1</button>
+                    <button class="number">2</button>
+                    <button class="number">3</button>
+                    <button class="operator" data-action="+">+</button>
+                    
+                    <button class="number zero">0</button>
+                    <button class="decimal">.</button>
+                    <button class="equals" data-action="=">=</button>
+                </div>
+
+                <!-- Scientific Mode Buttons -->
+                <div id="scientific-keypad" class="hidden-keypad">
+                    <button class="clear" data-action="clear">C</button>
+                    <button class="operator" data-action="backspace">⌫</button>
+                    <button class="operator" data-action="(">(</button>
+                    <button class="operator" data-action=")">)</button>
+                    
+                    <button class="scientific" data-action="sin">sin</button>
+                    <button class="scientific" data-action="cos">cos</button>
+                    <button class="scientific" data-action="tan">tan</button>
+                    <button class="operator" data-action="/">/</button>
+                    
+                    <button class="scientific" data-action="log">log</button>
+                    <button class="scientific" data-action="ln">ln</button>
+                    <button class="scientific" data-action="sqrt">√</button>
+                    <button class="operator" data-action="*">×</button>
+                    
+                    <button class="scientific" data-action="pow">x^y</button>
+                    <button class="scientific" data-action="factorial">x!</button>
+                    <button class="scientific" data-action="pi">π</button>
+                    <button class="operator" data-action="-">-</button>
+                    
+                    <button class="scientific" data-action="e">e</button>
+                    <button class="number">0</button>
+                    <button class="decimal">.</button>
+                    <button class="operator" data-action="+">+</button>
+                    
+                    <button class="equals" data-action="=">=</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="chatbot">
+            <div class="chatbot-header">
+                <i class="fas fa-robot"></i>
+                <h2>RGR Assistant</h2>
+            </div>
+            <div id="math-history" style="background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 5px;">
+                <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">Math History</h3>
+                <div id="history-list" style="max-height: 150px; overflow-y: auto;">
+                    <!-- History items will be added here dynamically -->
+                </div>
+            </div>
+            <div id="chat-window">
+                <div class="bot-message">Hi! I'm your calculator assistant. Need help with calculations?</div>
+            </div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask me anything...">
+                <button id="send-btn">Send</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 RGR Calculator | Made with <i class="fas fa-heart"></i> by RGR Team</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

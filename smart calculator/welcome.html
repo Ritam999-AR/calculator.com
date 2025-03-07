@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to RGR Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .welcome-container {
+            text-align: center;
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .welcome-image {
+            max-width: 300px;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .get-started-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.3s ease;
+        }
+        .get-started-btn:hover {
+            transform: scale(1.05);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <i class="fas fa-calculator logo-icon"></i>
+            <h1>RGR Calculator</h1>
+        </div>
+        <div class="auth-buttons" style="position: absolute; top: 1rem; right: 1rem;">
+            <a href="login.html" style="color: white; margin-right: 1rem; text-decoration: none;">Login</a>
+            <a href="signup.html" style="color: white; text-decoration: none;">Sign Up</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="welcome-container">
+            <h1>Welcome to RGR Calculator</h1>
+            <p>Your Smart Scientific Calculator with AI Assistant</p>
+            <img src="https://images.unsplash.com/photo-1587145820266-a5951ee6f620" alt="Calculator" class="welcome-image">
+            <div style="margin: 2rem 0;">
+                <a href="index.html" class="get-started-btn">Get Started</a>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-robot" style="font-size: 2rem; color: #3498db;"></i>
+                    <h3>AI Assistant</h3>
+                    <p>Get help with complex calculations and mathematical concepts</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-history" style="font-size: 2rem; color: #3498db;"></i>
+                    <h3>Calculation History</h3>
+                    <p>Track your calculations and review them anytime</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-square-root-alt" style="font-size: 2rem; color: #3498db;"></i>
+                    <h3>Scientific Mode</h3>
+                    <p>Advanced functions for complex mathematical operations</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 RGR Calculator | Made with <i class="fas fa-heart"></i> by RGR Team</p>
+    </footer>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</body>
+</html>
